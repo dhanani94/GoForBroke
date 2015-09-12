@@ -51,6 +51,13 @@ router.get("/temp", function(req,res){
 	});
 });
 
+router.get("/temp2", function(req,res){
+	var url = "http://api.reimaginebanking.com/accounts/55e94a6cf8d8770528e616b1?key=fa40c3057aeb427edf10918e2e63ced4";
+	request.get(url).end(function(err, data){
+		res.send(data.text);
+	});
+});
+
 router.post('/', function(req, res){
 	var data = req.body;
 	console.log("save to gun", data);
