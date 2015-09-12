@@ -23,13 +23,55 @@
 	<p>Hello how is it going!</p>
 
 	<label>Name</label>
-	<input type="text" placeholder="Enter your name here" ng-model="userInput">
+	<input type="text" placeholder="Enter your name here" ng-model="userInputGun">
 	<button class="btn btn-default" ng-click="sendData()">Submit!</button>
 	<div>
 		<h2>Peoples names</h3>
 		<h3>{{displayInfo}}</h4>
 	</div>
 	
+
+
+	<div class = "col-xs-3">
+
+<form>
+  <div class="form-group">
+    <label>Departure Date</label>
+    <input type="date" class="form-control" ng-model="userInput.departureDate">
+  </div>
+  <div class="form-group">
+    <label>Return Date</label>
+    <input type="date" class="form-control" ng-model="userInput.returnDate">
+  </div>
+  <div class="for">
+    <label>Origin</label>
+    <input type="text" class="form-control" ng-model="userInput.origin">
+  </div>
+  <div class="form-group">
+    <label>Destination</label>
+    <input type="text" class="form-control" ng-model="userInput.destination">
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-click="getFlights()">Submit</button>
+</form>
+</div>
+
+<div ng-if="flightInfo">
+	<h1>Oh my look at all this data!</h1>
+
+	<table>
+		<tr>
+			<th>Description</th>
+			<th>Price</th>
+			<th>Purchance</th>
+		</tr>
+	</table>
+	<p ng-repeat="flight in flightInfo">Total Price: {{flight}}</p>
+
+</div>
+
+
+
 
 
 </div>
