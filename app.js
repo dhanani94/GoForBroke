@@ -12,6 +12,11 @@ var app = express();
 
 var gun = Gun({file: 'data.json'});
 
+app.use(function(req, res, next){
+  req.gun = gun;
+  next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -27,6 +32,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/api', api);
+// app.use('/api', function(req, res, next){
+//   console.log("testing that /api got called");
+//   var data = req.body;
+//   console.log("save to gun", data);
+//   // var itemName= req.param('key');
+//   req.gun.put(data, function(err){
+//     console.log("was there an error in GUN?", err);
+//   }).key("hello");
+// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,7 +56,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('error.html', {
       message: err.message,
       error: err
     });
@@ -53,7 +67,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render('error.html', {
     message: err.message,
     error: {}
   });
