@@ -11,6 +11,7 @@ controllers.MainController = function ($scope, MainFact){
 	$scope.userInput.returnDate = new Date("10/25/2015");
 	$scope.userInput.origin = "ATL";
 	$scope.userInput.destination = "LAX";
+	$scope.userInput.threshhold = "1250";
 
 	function loadData() {
 		MainFact.getData().success(function(data){
