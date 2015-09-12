@@ -3,17 +3,18 @@ var router = express.Router();
 var config = require('../config');
 var request = require('superagent');
 var moment = require('moment');
-
+var Gun = require('gun');
 
 
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-req.gun.get('hello').set().val(function(who, field){
-  // console.log(who, field);
-  res.send(200);
-  // {title: "The Doctor", phone: '770-090-0461'}
-})
+	console.log("testing");
+
+	req.gun.get('names').map(function(data){
+		req.b
+	});
+  res.send(data);
 });
 
 
@@ -37,12 +38,10 @@ router.post('/flight', function(req, res){
 	request
 	.get(url)
 	.end(function(err, data){
-	    // console.log(data);
 	    res.send(data.text);
 	});
 
 });
-
 
 router.get("/temp", function(req,res){
 	var url = "http://terminal2.expedia.com/x/suggestions/regions?query=SFO&apikey="+config.expediaKey;
@@ -59,12 +58,15 @@ router.get("/temp2", function(req,res){
 });
 
 router.post('/', function(req, res){
+	console.log("hello");
 	var data = req.body;
-	console.log("save to gun", data);
+	var randomId = Gun.text.random(6);
+	// data = randomId;
+	// console.log("save to gun", data);
 	// var itemName= req.param('key');
-	req.gun.put(data, function(err, ok){
-		// console.log("data WAS SAVED?", err);
-	}).key("hello");
+	req.gun.set({randomId : data}, function(err, ok){
+		console.log("data WAS SAVED?", err, ok);
+	}).key("names");
 
 	res.send(200);
 });

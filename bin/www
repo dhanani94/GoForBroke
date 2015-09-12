@@ -8,6 +8,9 @@ var app = require('../app');
 var debug = require('debug')('gunTest:server');
 var http = require('http');
 
+//var Gun = require('gun');
+//var gun = Gun({file: 'data.json'});
+//gun.attach(http);
 /**
  * Get port from environment and store in Express.
  */
@@ -20,10 +23,12 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+//gun.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
+
 
 server.listen(port);
 server.on('error', onError);

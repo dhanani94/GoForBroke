@@ -3,11 +3,14 @@
 <head>
 	<title><%=title%></title>
 	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="/gun.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 	<script type="text/javascript" src="javascripts/ang.js"></script>
+	<!-- // <script type="text/javascript" src="javascripts/init.js"></script> -->
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -16,6 +19,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body ng-controller = "MainController">
+
+<%- include partials/navbar.html %>
 
 <div class="container">
 	
@@ -27,34 +32,40 @@
 	<button class="btn btn-default" ng-click="sendData()">Submit!</button>
 	<div>
 		<h2>Peoples names</h3>
-		<h3>{{displayInfo}}</h4>
+		<h3 ng-repeat="name in displayInfo"> Name: {{name}}</h4>
+		<!-- <h3>{{displayInfo}}</h4> -->
 	</div>
 	
 
 
-	<div class = "col-xs-3">
+ <div id="home" class="container">
+ 	<div class = "col-xs-6 col-xs-offset-3">
+	 	<h1>What's yo flight?</h1>
+ 		<form>
+ 			<div class="form-group">
+ 				<label>Departure Date</label>
+ 				<input type="date" class="form-control" ng-model="userInput.departureDate">
+ 			</div>
+ 			<div class="form-group">
+ 				<label>Return Date</label>
+ 				<input type="date" class="form-control" ng-model="userInput.returnDate">
+ 			</div>
+ 			<div class="for">
+ 				<label>Origin</label>
+ 				<input type="text" class="form-control" ng-model="userInput.origin">
+ 			</div>
+ 			<div class="form-group">
+ 				<label>Destination</label>
+ 				<input type="text" class="form-control" ng-model="userInput.destination">
+ 			</div>
 
-<form>
-  <div class="form-group">
-    <label>Departure Date</label>
-    <input type="date" class="form-control" ng-model="userInput.departureDate">
-  </div>
-  <div class="form-group">
-    <label>Return Date</label>
-    <input type="date" class="form-control" ng-model="userInput.returnDate">
-  </div>
-  <div class="for">
-    <label>Origin</label>
-    <input type="text" class="form-control" ng-model="userInput.origin">
-  </div>
-  <div class="form-group">
-    <label>Destination</label>
-    <input type="text" class="form-control" ng-model="userInput.destination">
-  </div>
+ 			<button type="submit" class="btn btn-primary" ng-click="getFlights()">Submit</button>
+ 		</form>
+ 	</div>
+ </div>
 
-  <button type="submit" class="btn btn-primary" ng-click="getFlights()">Submit</button>
-</form>
-</div>
+
+
 
 <div ng-if="flightInfo">
 	<h1>Oh my look at all this data!</h1>
@@ -75,8 +86,6 @@
 
 
 </div>
-	
-	
 
 
 

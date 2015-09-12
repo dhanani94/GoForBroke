@@ -3,29 +3,48 @@ var controllers = {};
 var factories = {};
 app.controller(controllers);
 app.factory(factories);
+var gun = Gun(location.origin + '/gun');
+var people = gun.get('people').set();
 
 controllers.MainController = function ($scope, MainFact){
 	$scope.userInput = {};
-	// var d = new Date(dateString);
 	$scope.userInput.departureDate = new Date("10/22/2015");
 	$scope.userInput.returnDate = new Date("10/25/2015");
-	$scope.userInput.origin = "ATL";
+	$scope.userInput.origin = "SFO";
 	$scope.userInput.destination = "LAX";
+
+
+   
+	function nameLoaded(name){
+
+	}
+
+	var names = {};
+	people.map().val(function(name, id){ 
+		console.log("data from gun?", id, name);
+		names[id] = name;
+		$scope.displayInfo = names;
+		$scope.$apply();
+	 })
 
 	function loadData() {
 		MainFact.getData().success(function(data){
-		$scope.displayInfo = data;
-		// $scope.$apply();
+		// $scope.displayInfo = data;
+			// data.forEach(nameLoaded)
 		});
-	} loadData();
+	}
 
 	$scope.sendData  = function(){
-		MainFact.sendData(
-		{'name' : $scope.userInputGun}
-		).success(function(){
-			alert("success!");
-			loadData();
-		});
+		if($scope.userInputGun){
+			people.set($scope.userInputGun);
+			$scope.userInputGun = "";
+		}
+		// MainFact.sendData(
+		// $scope.userInputGun
+		// ).success(function(){
+		// 	alert("success!");
+		// 	loadData();
+		// });
 	}
 
 	$scope.getFlights = function(){
@@ -50,8 +69,8 @@ factories.MainFact = function($http){
 		return $http.post('/api/flight', params);
 	}
 
-	services.sendData = function(jsonData){
-		return $http.post('/api', jsonData);
+	services.sendData = function(name){
+		return $http.post('/api', name);
 	}
 
 	return services;
