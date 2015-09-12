@@ -23,9 +23,10 @@ router.post('/flight', function(req, res){
 	var userData = {};
 	userData.departureDate = moment(data.departureDate).format("YYYY-MM-DD") || "2015-10-20";
 	userData.returnDate = moment(data.returnDate).format("YYYY-MM-DD") || "2015-10-20";
-	userData.origin = data.origin || "ATL";
+	userData.origin = data.origin || "DFW";
 	userData.destination = data.destination || "LAX";
 	userData.regionid = 6000479;
+	userData.threshhold = 1250;
 	console.log("dude im sending this: " + userData.departureDate);
 	var url = "http://terminal2.expedia.com/x/packages?departureDate="+
 	userData.departureDate+"&originAirport="+
@@ -51,6 +52,7 @@ router.get("/temp", function(req,res){
 });
 
 router.get("/temp2", function(req,res){
+	var threshhold = {};
 	var url = "http://api.reimaginebanking.com/accounts/55e94a6cf8d8770528e616b1?key=fa40c3057aeb427edf10918e2e63ced4";
 	request.get(url).end(function(err, data){
 		res.send(data.text);

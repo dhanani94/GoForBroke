@@ -36,8 +36,6 @@
 		<!-- <h3>{{displayInfo}}</h4> -->
 	</div>
 	
-
-
  <div id="home" class="container">
  	<div class = "col-xs-6 col-xs-offset-3">
 	 	<h1>What's yo flight?</h1>
@@ -66,6 +64,33 @@
 
 
 
+	<div class = "col-xs-3">
+
+<form>
+  <div class="form-group">
+    <label>Departure Date</label>
+    <input type="date" class="form-control" ng-model="userInput.departureDate">
+  </div>
+  <div class="form-group">
+    <label>Return Date</label>
+    <input type="date" class="form-control" ng-model="userInput.returnDate">
+  </div>
+  <div class="for">
+    <label>Origin</label>
+    <input type="text" class="form-control" ng-model="userInput.origin">
+  </div>
+  <div class="form-group">
+    <label>Destination</label>
+    <input type="text" class="form-control" ng-model="userInput.destination">
+  </div>
+  <div class="form-group">
+    <label>Threshhold</label>
+    <input type="text" class="form-control" ng-model="userInput.threshhold">
+  </div>
+
+  <button type="submit" class="btn btn-primary" ng-click="getFlights()">Submit</button>
+</form>
+</div>
 
 <div ng-if="flightInfo">
 	<h1>Oh my look at all this data!</h1>
