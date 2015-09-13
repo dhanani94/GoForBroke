@@ -110,14 +110,74 @@
  		 		<!-- <label>Account Number: </label> -->
  		 		<!-- <input type="text" class="form-control" ng-model="accountNum"> </br> -->
  			 	<button class="btn btn-danger btn-lg center-block" ng-hide = "showCountries" ng-click="showCountries = true">GTFO</button>
- 			 	<div class="btn-group center-block" ng-show="showCountries" role="group">
+ <!-- 			 	<div class="btn-group center-block" ng-show="showCountries" role="group">
  			 	  <button ng-click="gtfo({'country' : 'India', 'code' : 'DEL'})" type="button" class="btn btn-primary">India</button>
  			 	  <button ng-click="gtfo({'country' : 'China', 'code' : 'PEK'})" type="button" class="btn btn-warning">China</button>
  			 	  <button ng-click="gtfo({'country' : 'Germany', 'code' : 'FRA'})" type="button" class="btn btn-danger">Germany</button>
- 			 	</div>
+ 			 	</div> -->
  		 	</div>
- 	 	</div>
+		 	</div>
+
+
+ 		 	 	  	<div class="col-xs-12" ng-show="showCountries">
+
+ 		 	 	  	  <div class="col-sm-6 col-md-4">
+ 		 	 	  	    <div class="thumbnail">
+ 		 	 	  	      <img src='images/india.jpg'>
+ 		 	 	  	      <div class="caption">
+ 		 	 	  	        <h3>India</h3>
+ 		 	 	  	        <p></p>
+ 		 	 	  	        <p>
+ 		 		 	  	        <a href="" class="btn btn-primary" role="button">Button</a> 
+ 		 		 	  	        <a href="" class="btn btn-default" role="button">Button</a>
+ 		 	 	  	        </p>
+ 		 	 	  	      </div>
+ 		 	 	  	    </div>
+ 		 	 	  	  </div>
+
+ 	  	   	  	  <div class="col-sm-6 col-md-4">
+ 	  	   	  	    <div class="thumbnail">
+ 	  	   	  	      <img src='images/china.jpg'>
+ 	  	   	  	      <div class="caption">
+ 	  	   	  	        <h3>China</h3>
+ 	  	   	  	        <p></p>
+ 	  	   	  	        <p>
+ 	  	  	 	  	        <a href="" class="btn btn-primary" role="button">Button</a> 
+ 	  	  	 	  	        <a href="" class="btn btn-default" role="button">Button</a>
+ 	  	   	  	        </p>
+ 	  	   	  	      </div>
+ 	  	   	  	    </div>
+ 	  	   	  	  </div>
+
+
+	  	   	  	  <div class="col-sm-6 col-md-4">
+	  	   	  	    <div class="thumbnail">
+	  	   	  	      <img src='images/germany.jpg'>
+	  	   	  	      <div class="caption">
+	  	   	  	        <h3>Germany</h3>
+	  	   	  	        <p></p>
+	  	   	  	        <p>
+	  	  	 	  	        <a href="" class="btn btn-primary" role="button">Button</a> 
+	  	  	 	  	        <a href="" class="btn btn-default" role="button">Button</a>
+	  	   	  	        </p>
+	  	   	  	      </div>
+	  	   	  	    </div>
+	  	   	  	  </div>
+
+ 		 	 	  	</div>
+
+
+
+
+
+ 	 	
  	 </div>
+
+</div>
+
+
+
+
 
  	 <div class="container" ng-if="flightInfo"> 	
  	 	<div class="list-group">
@@ -128,18 +188,34 @@
  	  	</div>
 
 
- 	  	<div class="row">
- 	  	  <div class="col-sm-6 col-md-4">
- 	  	    <div class="thumbnail">
- 	  	      <img src="..." alt="...">
- 	  	      <div class="caption">
- 	  	        <h3>Thumbnail label</h3>
- 	  	        <p>...</p>
- 	  	        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
- 	  	      </div>
- 	  	    </div>
- 	  	  </div>
- 	  	</div>
+ 	  	<div class="container" ng-if="accountInfo"> 	
+ 	  		<div class="list-group">
+ 	  	 	  <a href="#" class="list-group-item">
+ 	  	 	    <h4 class="list-group-item-heading">Account Name</h4>
+ 	  	 	    <p class="list-group-item-text">{{accountInfo.accountnickname}}</p>
+ 	  	 	  </a> 	
+ 	  	 	  <a href="#" class="list-group-item">
+ 	  	 	    <h4 class="list-group-item-heading">Account Balance</h4>
+ 	  	 	    <p class="list-group-item-text">{{accountInfo.accountbalance}}</p>
+ 	  	 	  </a> 	
+ 	  	 	  <a href="#" class="list-group-item">
+ 	  	 	    <h4 class="list-group-item-heading">First Name</h4>
+ 	  	 	    <p class="list-group-item-text">{{accountInfo.first_name}}</p>
+ 	  	 	  </a> 	
+ 	  	 	  <a href="#" class="list-group-item">
+ 	  	 	    <h4 class="list-group-item-heading">Last Name</h4>
+ 	  	 	    <p class="list-group-item-text">{{accountInfo.last_name}}</p>
+ 	  	 	  </a> 	
+ 	  	 	  <a href="#" class="list-group-item">
+ 	  	 	    <h4 class="list-group-item-heading">Address</h4>
+ 	  	 	    <p class="list-group-item-text">{{accountInfo.address.street_number}} {{accountInfo.address.street_name}}</br>{{accountInfo.address.city}}, {{accountInfo.address.state}} {{accountInfo.address.zip}}</p>
+ 	  	 	  </a> 	  
+ 	  	 	  <a href="#" class="list-group-item" ng-if="accountInfo.phone">
+ 	  	 	    <h4 class="list-group-item-heading">Phone Number</h4>
+ 	  	 	    <p class="list-group-item-text">{{accountInfo.phone}}</p>
+ 	  	 	  </a> 	
+ 	  	 	</div>
+ 	  	 </div>
 
 
 <!--  	 	<div class="form-group">
@@ -169,7 +245,7 @@
 
 
 
-</div>
+
 
 
 
