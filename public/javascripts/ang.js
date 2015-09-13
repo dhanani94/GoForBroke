@@ -29,8 +29,9 @@ controllers.MainController = function ($scope, MainFact){
 		}
 	}
 
-	$scope.getFlights = function(){
-		MainFact.getFlights($scope.userInput).success(function(data){
+	$scope.gtfo = function(){
+		userData.origin = "ATL"; /// not hard code this l8r 
+		MainFact.getFlights(userData).success(function(data){
 			$scope.flightInfo = data;
 			// $scope.$apply();
 		});

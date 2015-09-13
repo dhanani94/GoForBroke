@@ -33,6 +33,36 @@ router.get('/callMe', function(req, res){
 })
 
 
+router.post('/flight', function(req, res){
+	var data = req.body;
+	var userData = {};
+
+	var departureDate = data.departureDate || moment();
+	var departureDate = moment(departureDate);
+	var returnDate = moment(departureDate).add(7, 'd');
+	userData.departureDate = moment(departureDate).format("YYYY-MM-DD");
+	userData.returnDate = moment(returnDate).format("YYYY-MM-DD");
+
+	userData.origin = data.origin || "ATL";
+	userData.destination = data.destination || generateDestination();
+	userData.regionid = 6000479; //////NEED TO GENERATE THIS
+	userData.threshhold = 1250; //////wHAT THE FUCK IS THIS?!?!
+	var url = "http://terminal2.expedia.com/x/packages?departureDate="+
+	userData.departureDate+"&originAirport="+
+	userData.origin+"&destinationAirport="+
+	userData.destination+"&returnDate="+
+	userData.returnDate+"&regionid="+
+	userData.regionid+"&limit=1"+
+	"&apikey="+config.expediaKey;
+
+	request
+	.get(url)
+	.end(function(err, data){
+	    res.send(data.text);
+	});
+
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	console.log("testing");
@@ -50,38 +80,6 @@ function generateDestination(){
 	return rtnObj;
 }
 
-router.post('/flight', function(req, res){
-	console.log("hello");
-	var data = req.body;
-	var userData = {};
-
-	var departureDate = data.departureDate || moment();
-	var departureDate = moment(departureDate);
-	var returnDate = moment(departureDate).add(7, 'd');
-	userData.departureDate = moment(departureDate).format("YYYY-MM-DD");
-	userData.returnDate = moment(returnDate).format("YYYY-MM-DD");
-
-
-	userData.origin = data.origin || "ATL";
-	userData.destination = data.destination || generateDestination();
-	userData.regionid = 6000479; //////NEED TO GENERATE THIS
-	userData.threshhold = 1250; //////wHAT THE FUCK IS THIS?!?!
-	console.log("dude im sending this: " + userData.departureDate);
-	var url = "http://terminal2.expedia.com/x/packages?departureDate="+
-	userData.departureDate+"&originAirport="+
-	userData.origin+"&destinationAirport="+
-	userData.destination+"&returnDate="+
-	userData.returnDate+"&regionid="+
-	userData.regionid+"&limit=1"+
-	"&apikey="+config.expediaKey;
-
-	request
-	.get(url)
-	.end(function(err, data){
-	    res.send(data.text);
-	});
-
-});
 
 router.get("/temp", function(req,res){
 	var url = "http://terminal2.expedia.com/x/suggestions/regions?query=SFO&apikey="+config.expediaKey;

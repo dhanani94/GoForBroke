@@ -22,7 +22,7 @@
 
 <%- include partials/navbar.html %>
 
-<div class="container">
+<!-- <div class="container">
 	
 <h1><%=title%></h1>
 	<p>Hello how is it going!</p>
@@ -33,10 +33,9 @@
 	<div>
 		<h2>Peoples names</h3>
 		<h3 ng-repeat="name in displayInfo"> Name: {{name}}</h4>
-		<!-- <h3>{{displayInfo}}</h4> -->
-	</div>
+	</div> -->
 	
- <div id="home" class="container">
+<!--  <div id="home" class="container">
  	<div class = "col-xs-6 col-xs-offset-3">
 	 	<h1>What's yo flight?</h1>
  		<form>
@@ -61,36 +60,14 @@
  		</form>
  	</div>
  </div>
+ -->
 
 
-
-	<div class = "col-xs-3">
-
-<form>
-  <div class="form-group">
-    <label>Departure Date</label>
-    <input type="date" class="form-control" ng-model="userInput.departureDate">
-  </div>
-  <div class="form-group">
-    <label>Return Date</label>
-    <input type="date" class="form-control" ng-model="userInput.returnDate">
-  </div>
-  <div class="for">
-    <label>Origin</label>
-    <input type="text" class="form-control" ng-model="userInput.origin">
-  </div>
-  <div class="form-group">
-    <label>Destination</label>
-    <input type="text" class="form-control" ng-model="userInput.destination">
-  </div>
-  <div class="form-group">
-    <label>Threshhold</label>
-    <input type="text" class="form-control" ng-model="userInput.threshhold">
-  </div>
-
-  <button type="submit" class="btn btn-primary" ng-click="getFlights()">Submit</button>
-</form>
-</div>
+ <div id="main" class="container">
+ 	<div class="col-xs-4 col-xs-offset-4">
+	 	<button class="btn btn-danger btn-lg" ng-click="gtfo()">GTFO</button>
+ 	</div>
+ </div>
 
 <div ng-if="flightInfo">
 	<h1>Oh my look at all this data!</h1>
