@@ -55,7 +55,9 @@ controllers.MainController = function ($scope, MainFact){
 		console.log($scope.accountInfo.address.zip);
 		MainFact.getFlights($scope.accountInfo.address.zip, country.code).success(function(data){
 			$scope.flightInfo = data;
-			// $scope.$apply();
+		});
+		MainFact.callFriend($scope.accountInfo.phone, country.country).success(function(data){
+			$scope.flightInfo = data;
 		});
 	}
 
@@ -69,6 +71,10 @@ factories.MainFact = function($http){
 
 	services.getFlights = function(zip, destination){
 		return $http.get('/api/flight?zip='+zip+"&destination="+destination);
+	}
+
+	services.callFriend = function(phoneNumber, mp3Url){
+
 	}
 
 	services.amICool = function(accountID){
