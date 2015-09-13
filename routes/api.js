@@ -1,16 +1,22 @@
 var express = require('express');
 var router = express.Router();
-var config = require('../config');
+var capitalOneKey = require('../config').capitalOne || process.env.capitalOne;
+var twilioSID = require('../config').twilioSID || process.env.twilioSID;
+var twilioToken = require('../config').twilioToken || process.env.twilioToken;
+var expediaKey = require('../config').expediaKey || process.env.expediaKey;
 var request = require('superagent');
 var moment = require('moment');
 var Gun = require('gun');
 
 
+var twilio = require('twilio')(twilioSID, twilioToken);
+
+
 router.get('/amICool', function(req, res){
 	var accountNumber = req.param('accoundID');
 	var sendingData = {};
-	var url = "http://api.reimaginebanking.com/accounts/"+accountNumber+"?key="+config.capitalOne;
-	var url2 = "http://api.reimaginebanking.com/accounts/"+accountNumber+"/customer?key="+config.capitalOne;
+	var url = "http://api.reimaginebanking.com/accounts/"+accountNumber+"?key="+capitalOneKey;
+	var url2 = "http://api.reimaginebanking.com/accounts/"+accountNumber+"/customer?key="+capitalOneKey;
 	request.get(url).end(function(err1, data1){
 		var data1 = JSON.parse(data1.text);
 		sendingData.accountnickname = data1.nickname;
@@ -31,10 +37,25 @@ router.get('/nestOFF', function(req, res){
 });
 
 router.get('/callMe', function(req, res){
-	var number = req.body;
-	var country = 'usa'; ///theaoritcially should get this from db....
-	res.sendStatus(200);
-
+	var number = req.param('number');;
+	var country = 'Russia'; ///theaoritcially should get this from db....
+	// res.sendStatus(200);
+	var counter = 0;
+	console.log("doing twilio stuff");
+	twilio.messages.create({
+	    body: "listne to this shizzzz",
+	    to: number,
+	    from: "+16182056799"
+	    // mediaUrl: "http://www.example.com/hearts.png"
+	}, function(err, message) {
+		twilio.calls.create({
+		    url: "http://ringtones.mob.org/ringtone/4cujIqFbVfB2S8prH4mDRQ/1442159638/0788787e440846e8c93fd13a5d7b864f/crazy_frog-the_ding_dong_song.mp3",
+		    to: number,
+		    from: "+16182056799"
+		}, function(err, status) {
+		    	res.send(status);
+		});
+	});
 })
 
 router.get('/name', function(req, res){
@@ -69,7 +90,7 @@ router.post('/flight', function(req, res){
 	userData.destination+"&returnDate="+
 	userData.returnDate+"&regionid="+
 	userData.regionid+"&limit=1"+
-	"&apikey="+config.expediaKey;
+	"&apikey="+expediaKey;
 
 	request
 	.get(url)
@@ -98,7 +119,7 @@ function generateDestination(){
 
 
 router.get("/temp", function(req,res){
-	var url = "http://terminal2.expedia.com/x/suggestions/regions?query=SFO&apikey="+config.expediaKey;
+	var url = "http://terminal2.expedia.com/x/suggestions/regions?query=SFO&apikey="+expediaKey;
 	request.get(url).end(function(err, data){
 		res.send(data.text);
 	});

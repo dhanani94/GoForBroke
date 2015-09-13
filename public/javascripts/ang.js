@@ -38,7 +38,7 @@ controllers.MainController = function ($scope, MainFact){
 	}
 
 	$scope.gtfo = function(){
-		userData.origin = "ATL"; /// not hard code this l8r 
+		userData.zip = accountInfo.address.zip; /// not hard code this l8r 
 		MainFact.getFlights(userData).success(function(data){
 			$scope.flightInfo = data;
 			// $scope.$apply();
