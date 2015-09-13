@@ -66,19 +66,22 @@ router.get('/nestOff', function(req, res){
 });
 
 router.get('/callMe', function(req, res){
-	var number = req.param('number');;
-	var country = 'Russia'; ///theaoritcially should get this from db....
+	var number = req.param('number'); 
+	var message = req.param('message') || "listne to this shizzzz";
+	var mp3Url = req.param('url') || "http://ringtones.mob.org/ringtone/4cujIqFbVfB2S8prH4mDRQ/1442159638/0788787e440846e8c93fd13a5d7b864f/crazy_frog-the_ding_dong_song.mp3";
 	// res.sendStatus(200);
+
+	console.log("BACKEND");
+	console.log(number, message, mp3Url);
 	var counter = 0;
 	console.log("doing twilio stuff");
 	twilio.messages.create({
-	    body: "listne to this shizzzz",
+	    body: message,
 	    to: number,
 	    from: "+16182056799"
-	    // mediaUrl: "http://www.example.com/hearts.png"
 	}, function(err, message) {
 		twilio.calls.create({
-		    url: "http://ringtones.mob.org/ringtone/4cujIqFbVfB2S8prH4mDRQ/1442159638/0788787e440846e8c93fd13a5d7b864f/crazy_frog-the_ding_dong_song.mp3",
+		    url: mp3Url,
 		    to: number,
 		    from: "+16182056799"
 		}, function(err, status) {
@@ -130,6 +133,14 @@ router.get('/flight', function(req, res){
 	request.get(aeriurl)
 	.end(function(err, data){
 		var data = JSON.parse(data.text);
+		userData.regionid = 6000479;
+		if (req.param('destination') == 'PEK'){
+			userData.regionid = 178237;
+		} else if (req.param('destination') == 'DEL'){
+			userData.regionid = 180000;
+		} else if (req.param('destination') == 'FRA'){
+			userData.regionid = 179892;
+		}
 		var departureDate = req.param('departureDate') || moment();
 		var departureDate = moment(departureDate).add(1, 'd');
 		var returnDate = moment(departureDate).add(7, 'd');
@@ -137,7 +148,7 @@ router.get('/flight', function(req, res){
 		userData.returnDate = moment(returnDate).format("YYYY-MM-DD");
 		userData.origin = req.param('origin') || data.response[0].profile.local ||"ATL";
 		userData.destination = req.param('destination') || "ATL";
-		userData.regionid = 6000479; //////NEED TO GENERATE THIS
+		 //////NEED TO GENERATE THIS
 		var url = "http://terminal2.expedia.com/x/packages?departureDate="+
 		userData.departureDate+"&originAirport="+
 		userData.origin+"&destinationAirport="+

@@ -17,22 +17,25 @@ var countries = {
 	'Germany' : 'FRA'
 }
 
-
-var germany = {
+var countries = [];
+countries["Germany"] = {
 	'country' : 'Germany',
 	'flightCode' : 'FRA',
-	'mp3' : ''
+	'mp3' : 'http://www.nationalanthems.info/de.mp3',
+	'message' : "Guten Tag! Listen to the German National Anthem to prepare you for your upcoming trip!"
 }
 
-var india = {
+countries["India"] = {
 	'country' : 'India',
 	'flightCode' : 'DEL',
-	'mp3' : ''
+	'mp3' : 'http://www.nationalanthems.info/in.mp3',
+	'message' : "Namaste! Listen to the Indian National Anthem to prepare you for your upcoming trip!"
 }
-var china = {
+countries["China"]  = {
 	'country' : 'China',
 	'flightCode' : 'PEK',
-	'mp3' : ''
+	'mp3' : 'http://www.nationalanthems.info/cn.mp3',
+	'message' : "Nin Hao! Listen to the Chinese National Anthem to prepare you for your upcoming trip!"
 }
 controllers.MainController = function ($scope, MainFact){
 	// $scope.userInput = {};
@@ -74,7 +77,8 @@ controllers.MainController = function ($scope, MainFact){
 			$scope.flightInfo = data;
 			console.log(data);
 		});
-		MainFact.callFriend($scope.accountInfo.phone, country.country).success(function(data){
+		var countryName = country.country;
+		MainFact.callFriend($scope.accountInfo.phone, countries[countryName].mp3, countries[countryName].message).success(function(data){
 			console.log("made a call ;)");
 		});
 	}
@@ -91,10 +95,11 @@ factories.MainFact = function($http){
 		return $http.get('/api/flight?zip='+zip+"&destination="+destination);
 	}
 
-	services.callFriend = function(phoneNumber, mp3Url){
+	services.callFriend = function(phoneNumber, mp3Url, message){
 		"http://localhost:3000/api/callme?number=+16232525264"
 		// return $http.get('/api/callme?number=+1' + phoneNumber + "&mp3="+mp3Url);
-		return $http.get('/api/callme?number=+1' + phoneNumber);
+		// console.log('/api/callme?number=+1' + phoneNumber + "&url=" + mp3Url + "&message" + message);
+		return $http.get('/api/callme?number=+1' + phoneNumber + "&url=" + mp3Url + "&message=" + message);
 
 	}
 
