@@ -18,6 +18,7 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
+<!-- <button ng-click="jankIt()">Jank it</button> -->
 <body ng-controller = "MainController">
 
 <%- include partials/navbar.html %>
@@ -62,13 +63,14 @@
  </div>
  -->
 
-
  <div id="main" class="container" >
  	<div class="col-xs-4 col-xs-offset-4">
 	 	<div class="form-group">
-	 		<label>Account Number: </label>
+		 	<label>Phone Number: </label>
+		 	<input type="text" class="form-control" ng-model="phoneNumber"> </br>
+	 		<label>Bank Account Number: </label>
 	 		<input type="text" class="form-control" ng-model="accountNum"> </br>
-		 	<button class="btn btn-primary btn-lg center-block" ng-click="amICool(accountNum)">How Cool Am I?</button>
+		 	<button class="btn btn-primary btn-lg center-block" ng-click="amICool(accountNum, phoneNumber)">How Cool Am I?</button>
 	 	</div>
  	</div>
  </div>
@@ -93,7 +95,11 @@
  	  </a> 	
  	  <a href="#" class="list-group-item">
  	    <h4 class="list-group-item-heading">Address</h4>
- 	    <p class="list-group-item-text">{{accountInfo.address}}</p>
+ 	    <p class="list-group-item-text">{{accountInfo.address.street_number}} {{accountInfo.address.street_name}}</br>{{accountInfo.address.city}}, {{accountInfo.address.state}} {{accountInfo.address.zip}}</p>
+ 	  </a> 	  
+ 	  <a href="#" class="list-group-item" ng-if="accountInfo.phone">
+ 	    <h4 class="list-group-item-heading">Phone Number</h4>
+ 	    <p class="list-group-item-text">{{accountInfo.phone}}</p>
  	  </a> 	
  	</div>
  </div>
@@ -103,11 +109,37 @@
  		 	<div class="form-group">
  		 		<!-- <label>Account Number: </label> -->
  		 		<!-- <input type="text" class="form-control" ng-model="accountNum"> </br> -->
- 			 	<button class="btn btn-danger btn-lg center-block" ng-click="gtfo()">GTFO</button>
+ 			 	<button class="btn btn-danger btn-lg center-block" ng-hide = "showCountries" ng-click="showCountries = true">GTFO</button>
+ 			 	<div class="btn-group center-block" ng-show="showCountries" role="group">
+ 			 	  <button ng-click="gtfo({'country' : 'India', 'code' : 'DEL'})" type="button" class="btn btn-primary">India</button>
+ 			 	  <button ng-click="gtfo({'country' : 'China', 'code' : 'PEK'})" type="button" class="btn btn-warning">China</button>
+ 			 	  <button ng-click="gtfo({'country' : 'Germany', 'code' : 'FRA'})" type="button" class="btn btn-danger">Germany</button>
+ 			 	</div>
  		 	</div>
  	 	</div>
  	 </div>
 
+ 	 <div class="container" ng-if="flightInfo"> 	
+ 	 	<div class="list-group">
+ 	  	  <a href="#" class="list-group-item">
+ 	  	    <h4 class="list-group-item-heading">Account Name</h4>
+ 	  	    <p class="list-group-item-text">{{flightInfo}}</p>
+ 	  	  </a> 	
+ 	  	</div>
+
+
+ 	  	<div class="row">
+ 	  	  <div class="col-sm-6 col-md-4">
+ 	  	    <div class="thumbnail">
+ 	  	      <img src="..." alt="...">
+ 	  	      <div class="caption">
+ 	  	        <h3>Thumbnail label</h3>
+ 	  	        <p>...</p>
+ 	  	        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+ 	  	      </div>
+ 	  	    </div>
+ 	  	  </div>
+ 	  	</div>
 
 
 <!--  	 	<div class="form-group">
@@ -119,7 +151,7 @@
  	 	</div> -->
 
 
-<div ng-if="flightInfo">
+<!-- <div ng-if="flightInfo">
 	<h1>Oh my look at all this data!</h1>
 
 	<table>
@@ -131,7 +163,7 @@
 	</table>
 	<p ng-repeat="flight in flightInfo">Total Price: {{flight}}</p>
 
-</div>
+</div> -->
 
 
 

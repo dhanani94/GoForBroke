@@ -1,19 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var capitalOneKey = require('../config').capitalOne || process.env.capitalOne;
-var twilioSID = require('../config').twilioSID || process.env.twilioSID;
-var twilioToken = require('../config').twilioToken || process.env.twilioToken;
-var expediaKey = require('../config').expediaKey || process.env.expediaKey;
+var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
+var twilioSID =  process.env.twilioSID || require('../config').twilioSID;
+var twilioToken =  process.env.twilioToken || require('../config').twilioToken;
+var expediaKey =  process.env.expediaKey || require('../config').expediaKey;
+
+var parseID =  process.env.parseID || require('../config').parseID;
+var parseKey =  process.env.parseKey || require('../config').parseKey;
+
+var aerisapiID =  process.env.aerisapiID || require('../config').aerisapiID;
+var aerisapiKey =  process.env.aerisapiKey || require('../config').aerisapiKey;
 var request = require('superagent');
 var moment = require('moment');
 var Gun = require('gun');
 
-
 var twilio = require('twilio')(twilioSID, twilioToken);
 
-
 router.get('/amICool', function(req, res){
-	var accountNumber = req.param('accoundID');
+	var accountNumber = req.param('accountID');
 	var sendingData = {};
 	var url = "http://api.reimaginebanking.com/accounts/"+accountNumber+"?key="+capitalOneKey;
 	var url2 = "http://api.reimaginebanking.com/accounts/"+accountNumber+"/customer?key="+capitalOneKey;
@@ -25,15 +29,27 @@ router.get('/amICool', function(req, res){
 			var data2 = JSON.parse(data2.text);
 			sendingData.first_name = data2.first_name;
 			sendingData.last_name = data2.last_name;
-			sendingData.address = data2.address;
+			// sendingData.address = data2.address;
+			sendingData.address = {"street_number":"711","zip":"30332","state":"Georgia","city":"Atlanta","street_name":"Techwood Dr NW"};
 			res.send(sendingData);
 		});
 	});
 });
 
-router.get('/nestOFF', function(req, res){
-	console.log('got here!');
-	res.sendStatus(200);
+router.get('/nestOn', function(req, res){
+	var body= {"hvac_mode":"cool"};
+	var url = "https://firebase-apiserver01-tah01-iad01.dapi.production.nest.com:9553/devices/thermostats/1yhERjEzqST2azClwAPWexNmcuQaqjrV/?auth=c.uurlJhBh7mswBROzJFfjFpvGcGfARcDXMcOe1FHAa1QgiwCmSsnsub7etfwFnrHDgVX5EaH4qIXdRcxnI5LqfWL4dePaedRLFoimam7BDGEjHNhgnAbcsAwrc4U0wJPMsfzXOh55rBWMZ5Fu"
+	request.put(url, body).end(function(err, data){
+		res.sendStatus(200);
+	});
+});
+
+router.get('/nestOff', function(req, res){
+	var body= {"hvac_mode":"off"};
+	var url = "https://firebase-apiserver01-tah01-iad01.dapi.production.nest.com:9553/devices/thermostats/1yhERjEzqST2azClwAPWexNmcuQaqjrV/?auth=c.uurlJhBh7mswBROzJFfjFpvGcGfARcDXMcOe1FHAa1QgiwCmSsnsub7etfwFnrHDgVX5EaH4qIXdRcxnI5LqfWL4dePaedRLFoimam7BDGEjHNhgnAbcsAwrc4U0wJPMsfzXOh55rBWMZ5Fu"
+	request.put(url, body).end(function(err, data){
+		res.sendStatus(200);
+	});
 });
 
 router.get('/callMe', function(req, res){
@@ -67,84 +83,64 @@ router.get('/name', function(req, res){
 	request.get(url).end(function(err, data){
 		res.send(data.text);
 	});
+	sendParse("Taufiq");
 });
 
 
-router.post('/flight', function(req, res){
-	var data = req.body;
-	var userData = {};
 
-	var departureDate = data.departureDate || moment();
-	var departureDate = moment(departureDate);
-	var returnDate = moment(departureDate).add(7, 'd');
-	userData.departureDate = moment(departureDate).format("YYYY-MM-DD");
-	userData.returnDate = moment(returnDate).format("YYYY-MM-DD");
-
-	userData.origin = data.origin || "ATL";
-	userData.destination = data.destination || generateDestination();
-	userData.regionid = 6000479; //////NEED TO GENERATE THIS
-	userData.threshhold = 1250; //////wHAT THE FUCK IS THIS?!?!
-	var url = "http://terminal2.expedia.com/x/packages?departureDate="+
-	userData.departureDate+"&originAirport="+
-	userData.origin+"&destinationAirport="+
-	userData.destination+"&returnDate="+
-	userData.returnDate+"&regionid="+
-	userData.regionid+"&limit=1"+
-	"&apikey="+expediaKey;
-
+function sendParse(nameOfDude) {
+	var url = "https://api.parse.com/1/push";
+	var body = {"data": 
+			{"alert": "Welcome to your new life" + nameOfDude},
+			"where" : 
+			{'deviceType' : "android"}
+		};
 	request
-	.get(url)
-	.end(function(err, data){
-	    res.send(data.text);
-	});
-
-});
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-	console.log("testing");
-
-	req.gun.get('names').map(function(data){
-		req.b
-	});
-  res.send(data);
-});
-
-function generateDestination(){
-	var rtnObj = {
-		"airport" : "LAX"
-	};
-	return rtnObj;
+	  .post(url)
+	  .send(body)
+	  .set('X-Parse-Application-Id', parseID)
+	  .set('X-Parse-REST-API-Key', parseKey)
+	  .set('Content-Type', 'application/json')
+	  .end(function(err, res){
+	    console.log(err, res);
+	  });
 }
 
 
-router.get("/temp", function(req,res){
-	var url = "http://terminal2.expedia.com/x/suggestions/regions?query=SFO&apikey="+expediaKey;
-	request.get(url).end(function(err, data){
-		res.send(data.text);
+router.get('/flight', function(req, res){
+	var zip = req.param('zip');
+	var aeriurl = "http://api.aerisapi.com/places/airports/closest/?p="+
+	zip+"&client_id="+
+	aerisapiID+"&client_secret="+
+	aerisapiKey+"&filter=largeairport";
+	var userData = {};
+	request.get(aeriurl)
+	.end(function(err, data){
+		var data = JSON.parse(data.text);
+		console.log(req.param('destination'));
+		var departureDate = req.param('departureDate') || moment();
+		var departureDate = moment(departureDate).add(1, 'd');
+		var returnDate = moment(departureDate).add(7, 'd');
+		userData.departureDate = moment(departureDate).format("YYYY-MM-DD");
+		userData.returnDate = moment(returnDate).format("YYYY-MM-DD");
+		userData.origin = req.param('origin') || data.response[0].profile.local ||"ATL";
+		userData.destination = req.param('destination') || "ATL";
+		userData.regionid = 6000479; //////NEED TO GENERATE THIS
+		var url = "http://terminal2.expedia.com/x/packages?departureDate="+
+		userData.departureDate+"&originAirport="+
+		userData.origin+"&destinationAirport="+
+		userData.destination+"&returnDate="+
+		userData.returnDate+"&regionid="+
+		userData.regionid+"&limit=1"+
+		"&apikey="+expediaKey;
+		request.get(url)
+		.end(function(err, data2){
+			var data = JSON.parse(data2.text);
+		    res.send(data);
+		});
 	});
+
 });
 
-router.get("/temp2", function(req,res){
-	var threshhold = {};
-	var url = "http://api.reimaginebanking.com/accounts/55e94a6cf8d8770528e616b1?key=fa40c3057aeb427edf10918e2e63ced4";
-	request.get(url).end(function(err, data){
-		res.send(data.text);
-	});
-});
-
-router.post('/', function(req, res){
-	console.log("hello");
-	var data = req.body;
-	var randomId = Gun.text.random(6);
-	// data = randomId;
-	// console.log("save to gun", data);
-	// var itemName= req.param('key');
-	req.gun.set({randomId : data}, function(err, ok){
-		console.log("data WAS SAVED?", err, ok);
-	}).key("names");
-
-	res.send(200);
-});
 
 module.exports = router;

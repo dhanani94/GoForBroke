@@ -3,47 +3,62 @@ var controllers = {};
 var factories = {};
 app.controller(controllers);
 app.factory(factories);
-var gun = Gun(location.origin + '/gun');
-var people = gun.get('people').set();
+// var gun = Gun(location.origin + '/gun');
+// var people = gun.get('people').set();
+
+var countries = {
+	'China' : 'PEK',
+	'India' : 'DEL',
+	'Canada': 'YYZ',
+	'Japan' : 'HND',
+	'UK'    : 'LHR',
+	'Thailand' : 'BKK',
+	'France' : 'CDG',
+	'Germany' : 'FRA'
+}
 
 controllers.MainController = function ($scope, MainFact){
 	// $scope.userInput = {};
-	$scope.accountNum = '55e94a6cf8d8770528e616b1';
+	$scope.accountNum = '55e94a6cf8d8770528e616b2';
 	// $scope.userInput.departureDate = new Date("10/22/2015");
 	// $scope.userInput.returnDate = new Date("10/25/2015");
 	// $scope.userInput.origin = "SFO";
 	// $scope.userInput.destination = "LAX";
 	// $scope.userInput.threshhold = "1250";
 
-	var names = {};
-	people.map().val(function(name, id){ 
-		if(!name){ return }
-		names[id] = name;
-		$scope.displayInfo = names;
-		$scope.$apply();
-	 })
+	// var names = {};
+	// people.map().val(function(name, id){ 
+	// 	if(!name){ return }
+	// 	names[id] = name;
+	// 	$scope.displayInfo = names;
+	// 	$scope.$apply();
+	//  })
 
-	$scope.sendData  = function(){
-		if($scope.userInputGun){
-			people.set($scope.userInputGun);
-			$scope.userInputGun = "";
-		}
-	}
+	// $scope.sendData  = function(){
+	// 	if($scope.userInputGun){
+	// 		people.set($scope.userInputGun);
+	// 		$scope.userInputGun = "";
+	// 	}
+	// }
 
-	$scope.amICool = function(accoundID){
-		MainFact.amICool(accoundID).success(function(data){
+
+	$scope.amICool = function(accountID, phoneNum){
+		MainFact.amICool(accountID).success(function(data){
 			$scope.accountInfo = data;
-			$scope.apply();
+			$scope.accountInfo.phone = phoneNum;
+			$scope.accountInfo.accountbalance ="$" + parseInt($scope.accountInfo.accountbalance).toLocaleString();
+			// $scope.apply();
 		});
 	}
 
-	$scope.gtfo = function(){
-		userData.zip = accountInfo.address.zip; /// not hard code this l8r 
-		MainFact.getFlights(userData).success(function(data){
+	$scope.gtfo = function(country){
+		console.log($scope.accountInfo.address.zip);
+		MainFact.getFlights($scope.accountInfo.address.zip, country.code).success(function(data){
 			$scope.flightInfo = data;
 			// $scope.$apply();
 		});
 	}
+
 
 
 
@@ -52,12 +67,12 @@ controllers.MainController = function ($scope, MainFact){
 factories.MainFact = function($http){
 	var services = {};
 
-	services.getFlights = function(params){
-		return $http.post('/api/flight', params);
+	services.getFlights = function(zip, destination){
+		return $http.get('/api/flight?zip='+zip+"&destination="+destination);
 	}
 
-	services.amICool = function(accoundID){
-		return $http.get('/api/amICool?accoundID=' +accoundID);
+	services.amICool = function(accountID){
+		return $http.get('/api/amICool?accountID=' +accountID);
 	}
 
 
