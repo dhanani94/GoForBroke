@@ -7,8 +7,6 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var api = require('./routes/api');
 var Gun = require('gun');
-var port = process.env.PORT || 3000;
-
 
 
 var app = express();
