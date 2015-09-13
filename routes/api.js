@@ -6,6 +6,32 @@ var moment = require('moment');
 var Gun = require('gun');
 
 
+router.get('/allgood', function(req, res){
+	console.log('got here!');
+	var accoutNumber = req.body || 7;
+	var balance = 1000;
+	var fName = "Taufiq";
+	var lName = "Dhanani";
+
+	res.send({
+		'balance' : balance,
+		'firstName' : fName,
+		'lastName' : lName
+	});
+});
+
+router.get('/nestOFF', function(req, res){
+	console.log('got here!');
+	res.sendStatus(200);
+});
+
+router.get('/callMe', function(req, res){
+	var number = req.body;
+	var country = 'usa'; ///theaoritcially should get this from db....
+	res.sendStatus(200);
+
+})
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -17,16 +43,29 @@ router.get('/', function(req, res, next) {
   res.send(data);
 });
 
+function generateDestination(){
+	var rtnObj = {
+		"airport" : "LAX"
+	};
+	return rtnObj;
+}
 
 router.post('/flight', function(req, res){
+	console.log("hello");
 	var data = req.body;
 	var userData = {};
-	userData.departureDate = moment(data.departureDate).format("YYYY-MM-DD") || "2015-10-20";
-	userData.returnDate = moment(data.returnDate).format("YYYY-MM-DD") || "2015-10-20";
-	userData.origin = data.origin || "DFW";
-	userData.destination = data.destination || "LAX";
-	userData.regionid = 6000479;
-	userData.threshhold = 1250;
+
+	var departureDate = data.departureDate || moment();
+	var departureDate = moment(departureDate);
+	var returnDate = moment(departureDate).add(7, 'd');
+	userData.departureDate = moment(departureDate).format("YYYY-MM-DD");
+	userData.returnDate = moment(returnDate).format("YYYY-MM-DD");
+
+
+	userData.origin = data.origin || "ATL";
+	userData.destination = data.destination || generateDestination();
+	userData.regionid = 6000479; //////NEED TO GENERATE THIS
+	userData.threshhold = 1250; //////wHAT THE FUCK IS THIS?!?!
 	console.log("dude im sending this: " + userData.departureDate);
 	var url = "http://terminal2.expedia.com/x/packages?departureDate="+
 	userData.departureDate+"&originAirport="+

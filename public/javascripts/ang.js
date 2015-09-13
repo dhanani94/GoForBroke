@@ -14,38 +14,19 @@ controllers.MainController = function ($scope, MainFact){
 	$scope.userInput.destination = "LAX";
 	$scope.userInput.threshhold = "1250";
 
-
-   
-	function nameLoaded(name){
-
-	}
-
 	var names = {};
 	people.map().val(function(name, id){ 
-		console.log("data from gun?", id, name);
+		if(!name){ return }
 		names[id] = name;
 		$scope.displayInfo = names;
 		$scope.$apply();
 	 })
-
-	function loadData() {
-		MainFact.getData().success(function(data){
-		// $scope.displayInfo = data;
-			// data.forEach(nameLoaded)
-		});
-	}
 
 	$scope.sendData  = function(){
 		if($scope.userInputGun){
 			people.set($scope.userInputGun);
 			$scope.userInputGun = "";
 		}
-		// MainFact.sendData(
-		// $scope.userInputGun
-		// ).success(function(){
-		// 	alert("success!");
-		// 	loadData();
-		// });
 	}
 
 	$scope.getFlights = function(){
@@ -62,17 +43,10 @@ controllers.MainController = function ($scope, MainFact){
 factories.MainFact = function($http){
 	var services = {};
 
-	services.getData = function(){
-		return $http.get('/api');
-	}
-
 	services.getFlights = function(params){
 		return $http.post('/api/flight', params);
 	}
 
-	services.sendData = function(name){
-		return $http.post('/api', name);
-	}
 
 	return services;
 }
