@@ -130,7 +130,6 @@ router.get('/flight', function(req, res){
 	request.get(aeriurl)
 	.end(function(err, data){
 		var data = JSON.parse(data.text);
-		console.log(req.param('destination'));
 		var departureDate = req.param('departureDate') || moment();
 		var departureDate = moment(departureDate).add(1, 'd');
 		var returnDate = moment(departureDate).add(7, 'd');

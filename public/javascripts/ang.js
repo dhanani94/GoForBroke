@@ -17,6 +17,23 @@ var countries = {
 	'Germany' : 'FRA'
 }
 
+
+var germany = {
+	'country' : 'Germany',
+	'flightCode' : 'FRA',
+	'mp3' : ''
+}
+
+var india = {
+	'country' : 'India',
+	'flightCode' : 'DEL',
+	'mp3' : ''
+}
+var china = {
+	'country' : 'China',
+	'flightCode' : 'PEK',
+	'mp3' : ''
+}
 controllers.MainController = function ($scope, MainFact){
 	// $scope.userInput = {};
 	$scope.accountNum = '55e94a6cf8d8770528e616b2';
@@ -57,7 +74,7 @@ controllers.MainController = function ($scope, MainFact){
 			$scope.flightInfo = data;
 		});
 		MainFact.callFriend($scope.accountInfo.phone, country.country).success(function(data){
-			$scope.flightInfo = data;
+			console.log("made a call ;)");
 		});
 	}
 
@@ -74,6 +91,9 @@ factories.MainFact = function($http){
 	}
 
 	services.callFriend = function(phoneNumber, mp3Url){
+		"http://localhost:3000/api/callme?number=+16232525264"
+		// return $http.get('/api/callme?number=+1' + phoneNumber + "&mp3="+mp3Url);
+		return $http.get('/api/callme?number=+1' + phoneNumber);
 
 	}
 

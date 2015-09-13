@@ -175,41 +175,21 @@
 
 
 
-
+<!-- 
  	 <div class="container" ng-if="flightInfo"> 	
  	 	<div class="list-group">
  	  	  <a href="#" class="list-group-item">
  	  	    <h4 class="list-group-item-heading">Account Name</h4>
  	  	    <p class="list-group-item-text">{{flightInfo}}</p>
  	  	  </a> 	
- 	  	</div>
+ 	  	</div> -->
 
 
- 	  	<div class="container" ng-if="accountInfo"> 	
- 	  		<div class="list-group">
+ 	  	<div class="container" ng-if="flightInfo"> 	
+ 	  		<div class="list-group" ng-repeat="flights in flightInfo.FlightList">
  	  	 	  <a href="#" class="list-group-item">
- 	  	 	    <h4 class="list-group-item-heading">Account Name</h4>
- 	  	 	    <p class="list-group-item-text">{{accountInfo.accountnickname}}</p>
- 	  	 	  </a> 	
- 	  	 	  <a href="#" class="list-group-item">
- 	  	 	    <h4 class="list-group-item-heading">Account Balance</h4>
- 	  	 	    <p class="list-group-item-text">{{accountInfo.accountbalance}}</p>
- 	  	 	  </a> 	
- 	  	 	  <a href="#" class="list-group-item">
- 	  	 	    <h4 class="list-group-item-heading">First Name</h4>
- 	  	 	    <p class="list-group-item-text">{{accountInfo.first_name}}</p>
- 	  	 	  </a> 	
- 	  	 	  <a href="#" class="list-group-item">
- 	  	 	    <h4 class="list-group-item-heading">Last Name</h4>
- 	  	 	    <p class="list-group-item-text">{{accountInfo.last_name}}</p>
- 	  	 	  </a> 	
- 	  	 	  <a href="#" class="list-group-item">
- 	  	 	    <h4 class="list-group-item-heading">Address</h4>
- 	  	 	    <p class="list-group-item-text">{{accountInfo.address.street_number}} {{accountInfo.address.street_name}}</br>{{accountInfo.address.city}}, {{accountInfo.address.state}} {{accountInfo.address.zip}}</p>
- 	  	 	  </a> 	  
- 	  	 	  <a href="#" class="list-group-item" ng-if="accountInfo.phone">
- 	  	 	    <h4 class="list-group-item-heading">Phone Number</h4>
- 	  	 	    <p class="list-group-item-text">{{accountInfo.phone}}</p>
+ 	  	 	    <h4 class="list-group-item-heading">Flight</h4>
+ 	  	 	    <p class="list-group-item-text">{{flights}}</p>
  	  	 	  </a> 	
  	  	 	</div>
  	  	 </div>
