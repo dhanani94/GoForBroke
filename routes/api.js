@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 try {
-   var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
+  var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
 	var twilioSID =  process.env.twilioSID || require('../config').twilioSID;
 	var twilioToken =  process.env.twilioToken || require('../config').twilioToken;
 	var expediaKey =  process.env.expediaKey || require('../config').expediaKey;
@@ -12,7 +12,7 @@ try {
 	var aerisapiKey =  process.env.aerisapiKey || require('../config').aerisapiKey;
 }
 catch(err) {
-   var capitalOneKey = process.env.capitalOne;
+  var capitalOneKey = process.env.capitalOne;
 	var twilioSID =  process.env.twilioSID;
 	var twilioToken =  process.env.twilioToken;
 	var expediaKey =  process.env.expediaKey;
@@ -103,9 +103,9 @@ router.get('/name', function(req, res){
 
 function sendParse(nameOfDude) {
 	var url = "https://api.parse.com/1/push";
-	var body = {"data": 
+	var body = {"data":
 			{"alert": "Welcome to your new life" + nameOfDude},
-			"where" : 
+			"where" :
 			{'deviceType' : "android"}
 		};
 	request
