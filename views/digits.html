@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<title><%=title%></title>
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="/gun.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	<script type="text/javascript" src="javascripts/ang.js"></script>
+	<!-- // <script type="text/javascript" src="javascripts/init.js"></script> -->
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<!-- <button ng-click="jankIt()">Jank it</button> -->
+<body ng-controller = "MainController">
+
+<%- include partials/navbar.html %>
+
+<div class="container">
+	
+<h1><%=title%></h1>
+	<p>Hello how is it going!</p>
+
+	<label>Name</label>
+	<input type="text" placeholder="Enter your name here" ng-model="userInputGun">
+	<button class="btn btn-default" ng-click="sendData()">Submit!</button>
+	<div>
+		<h2>Peoples names</h3>
+		<h3 ng-repeat="name in displayInfo"> Name: {{name}}</h4>
+	</div>
+
+
+
+
+</div>
+
+
+
+
+</body>
+</html>
