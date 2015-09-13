@@ -2,29 +2,26 @@ var express = require('express');
 var router = express.Router();
 
 try {
-   var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
+  var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
 	var twilioSID =  process.env.twilioSID || require('../config').twilioSID;
 	var twilioToken =  process.env.twilioToken || require('../config').twilioToken;
 	var expediaKey =  process.env.expediaKey || require('../config').expediaKey;
+  var parseID =  process.env.parseID || require('../config').parseID;
+  var parseKey =  process.env.parseKey || require('../config').parseKey;
+  var aerisapiID =  process.env.aerisapiID || require('../config').aerisapiID;
+  var aerisapiKey =  process.env.aerisapiKey || require('../config').aerisapiKey;
 }
 catch(err) {
-   var capitalOneKey = process.env.capitalOne;
+  var capitalOneKey = process.env.capitalOne;
 	var twilioSID =  process.env.twilioSID;
 	var twilioToken =  process.env.twilioToken;
 	var expediaKey =  process.env.expediaKey;
+  var parseID =  process.env.parseID;
+  var parseKey =  process.env.parseKey;
+  var aerisapiID =  process.env.aerisapiID;
+  var aerisapiKey =  process.env.aerisapiKey;
 }
 
-
-var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
-var twilioSID =  process.env.twilioSID || require('../config').twilioSID;
-var twilioToken =  process.env.twilioToken || require('../config').twilioToken;
-var expediaKey =  process.env.expediaKey || require('../config').expediaKey;
-
-var parseID =  process.env.parseID || require('../config').parseID;
-var parseKey =  process.env.parseKey || require('../config').parseKey;
-
-var aerisapiID =  process.env.aerisapiID || require('../config').aerisapiID;
-var aerisapiKey =  process.env.aerisapiKey || require('../config').aerisapiKey;
 var request = require('superagent');
 var moment = require('moment');
 var Gun = require('gun');
@@ -105,9 +102,9 @@ router.get('/name', function(req, res){
 
 function sendParse(nameOfDude) {
 	var url = "https://api.parse.com/1/push";
-	var body = {"data": 
+	var body = {"data":
 			{"alert": "Welcome to your new life" + nameOfDude},
-			"where" : 
+			"where" :
 			{'deviceType' : "android"}
 		};
 	request
