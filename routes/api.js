@@ -32,6 +32,17 @@ router.get('/callMe', function(req, res){
 
 })
 
+router.get('/name', function(req, res){
+	var country = req.param('country');
+	var gender = req.param('gender');
+	var url = "http://api.uinames.com/?gender="+
+	gender+"&country="+
+	country;
+	request.get(url).end(function(err, data){
+		res.send(data.text);
+	});
+});
+
 
 router.post('/flight', function(req, res){
 	var data = req.body;
