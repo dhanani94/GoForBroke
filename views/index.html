@@ -65,7 +65,14 @@
 
  <div id="main" class="container">
  	<div class="col-xs-4 col-xs-offset-4">
-	 	<button class="btn btn-danger btn-lg" ng-click="gtfo()">GTFO</button>
+	 	<div class="form-group">
+	 		<label>Account Number: </label>
+	 		<input type="text" class="form-control" ng-model="accountNum"> </br>
+		 	<button class="btn btn-danger btn-lg center-block" ng-click="amICool(accountNum)">How Cool Am I?</button>
+	 	</div>
+	 	<div class="col-xs-6 col-xs-offset3">
+	 		{{accountInfo}}
+	 	</div>
  	</div>
  </div>
 

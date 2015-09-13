@@ -6,17 +6,22 @@ var moment = require('moment');
 var Gun = require('gun');
 
 
-router.get('/allgood', function(req, res){
-	console.log('got here!');
-	var accoutNumber = req.body || 7;
-	var balance = 1000;
-	var fName = "Taufiq";
-	var lName = "Dhanani";
-
-	res.send({
-		'balance' : balance,
-		'firstName' : fName,
-		'lastName' : lName
+router.get('/amICool', function(req, res){
+	var accountNumber = req.param('accoundID');
+	var sendingData = {};
+	var url = "http://api.reimaginebanking.com/accounts/"+accountNumber+"?key="+config.capitalOne;
+	var url2 = "http://api.reimaginebanking.com/accounts/"+accountNumber+"/customer?key="+config.capitalOne;
+	request.get(url).end(function(err1, data1){
+		var data1 = JSON.parse(data1.text);
+		sendingData.accountnickname = data1.nickname;
+		sendingData.accountbalance = data1.balance;
+		request.get(url2).end(function(err2, data2){
+			var data2 = JSON.parse(data2.text);
+			sendingData.first_name = data2.first_name;
+			sendingData.last_name = data2.last_name;
+			sendingData.address = data2.address;
+			res.send(sendingData);
+		});
 	});
 });
 
