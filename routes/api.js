@@ -1,5 +1,20 @@
 var express = require('express');
 var router = express.Router();
+
+try {
+   var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
+	var twilioSID =  process.env.twilioSID || require('../config').twilioSID;
+	var twilioToken =  process.env.twilioToken || require('../config').twilioToken;
+	var expediaKey =  process.env.expediaKey || require('../config').expediaKey;
+}
+catch(err) {
+   var capitalOneKey = process.env.capitalOne;
+	var twilioSID =  process.env.twilioSID;
+	var twilioToken =  process.env.twilioToken;
+	var expediaKey =  process.env.expediaKey;
+}
+
+
 var capitalOneKey = process.env.capitalOne || require('../config').capitalOne;
 var twilioSID =  process.env.twilioSID || require('../config').twilioSID;
 var twilioToken =  process.env.twilioToken || require('../config').twilioToken;
