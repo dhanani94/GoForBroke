@@ -147,7 +147,6 @@
  	  	   	  	    </div>
  	  	   	  	  </div>
 
-
 	  	   	  	  <div class="col-sm-6 col-md-4">
 	  	   	  	    <div class="thumbnail">
 	  	   	  	      <img src='images/germany.jpg'>
@@ -162,12 +161,6 @@
 	  	   	  	  </div>
 
  		 	 	  	</div>
-
-
-
-
-
- 	 	
  	 </div>
 
 </div>
@@ -185,14 +178,38 @@
  	  	</div> -->
 
 
- 	  	<div class="container" ng-if="flightInfo"> 	
- 	  		<div class="list-group" ng-repeat="flights in flightInfo.FlightList">
- 	  	 	  <a href="#" class="list-group-item">
- 	  	 	    <h4 class="list-group-item-heading">Flight</h4>
- 	  	 	    <p class="list-group-item-text">{{flights}}</p>
+	<div class="container">
+ 	  	<div class="col-xs-6" ng-if="flightInfo" > 	
+ 	  		<div class="list-group">
+ 	  	 	  <a href="#" class="list-group-item" ng-repeat="flights in flightInfo.FlightList.Flight.FlightItinerary.FlightLeg[0].FlightSegment">
+ 	  	 	    <h4 class="list-group-item-heading">Your Out Going Flight</h4>
+ 	  	 	    <p class="list-group-item-text">Departure from {{flights.DepartureAirportCode}} at {{flights.DepartureDateTime}}</p>
+ 	  	 	    <p class="list-group-item-text">You will hopefully arrive by {{flights.ArrivalDateTime}} at {{flights.ArrivalAirportCode}}.</p>
+ 	  	 	    <p class="list-group-item-text">Keep in mind your flight number is {{flights.FlightNumber}}.</p>
+ 	  	 	  </a> 	
+ 	  	 	  <a href="#" class="list-group-item" ng-repeat="flights in flightInfo.FlightList.Flight.FlightItinerary.FlightLeg[1].FlightSegment">
+ 	  	 	    <h4 class="list-group-item-heading">Your Return Flight</h4>
+ 	  	 	    <p class="list-group-item-text">Departure from {{flights.DepartureAirportCode}} at {{flights.DepartureDateTime}}</p>
+ 	  	 	    <p class="list-group-item-text">You will hopefully arrive by {{flights.ArrivalDateTime}} at {{flights.ArrivalAirportCode}}.</p>
+ 	  	 	    <p class="list-group-item-text">Keep in mind your flight number is {{flights.FlightNumber}}.</p>
  	  	 	  </a> 	
  	  	 	</div>
  	  	 </div>
+
+	  	  <div class="col-sm-6" ng-if="flightInfo">
+	  	    <div class="thumbnail">
+	  	      <img src={{flightInfo.HotelList.Hotel.OverviewThumbnail}}>
+	  	      <div class="caption">
+	  	        <h3>{{flightInfo.HotelList.Hotel.Name}}</h3>
+	  	        <p>{{flightInfo.HotelList.Hotel.Description}}</p>
+	  	        <p>Remember, you check in to your {{flightInfo.HotelList.Hotel.RoomRatePlanDescription}} on {{flightInfo.HotelList.Hotel.CheckInDate}} and you check out on {{flightInfo.HotelList.Hotel.CheckOutDate}}.</p>
+	  	        <p>
+	 	  	        <a class="btn btn-success" role="button" ng-click="">Get Directions</a> 
+	  	        </p>
+	  	      </div>
+	  	    </div>
+	  	  </div>
+ 	</div>
 
 
 <!--  	 	<div class="form-group">

@@ -72,6 +72,7 @@ controllers.MainController = function ($scope, MainFact){
 		console.log($scope.accountInfo.address.zip);
 		MainFact.getFlights($scope.accountInfo.address.zip, country.code).success(function(data){
 			$scope.flightInfo = data;
+			console.log(data);
 		});
 		MainFact.callFriend($scope.accountInfo.phone, country.country).success(function(data){
 			console.log("made a call ;)");
