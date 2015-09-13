@@ -7,8 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET home page. */
-router.get('/digits', function(req, res, next) {
-  res.render('digits.html', { title: 'Welcome to my crib.' });
+router.get('/ring', function(req, res, next) {
+  res.render('ring.html', { title: 'Welcome to my crib.' });
 });
 
 module.exports = router;
