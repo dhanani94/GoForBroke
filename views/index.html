@@ -18,10 +18,9 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
-<!-- <button ng-click="jankIt()">Jank it</button> -->
 <body ng-controller = "MainController">
 
-<%- include partials/navbar.html %>
+
 
 <!-- <div class="container">
 	
@@ -65,9 +64,10 @@
 
  <div id="main" class="container" >
  	<div class="col-xs-4 col-xs-offset-4">
-	 	<div class="form-group">
+	 	<div class="form-group" ng-hide="accountInfo">
+	 		<img src="/images/graphics/androidgoforbrokelogo.png" class="center-block"></br>
 		 	<label>Phone Number: </label>
-		 	<input type="text" class="form-control" ng-model="phoneNumber"> </br>
+		 	<input type="text" class="form-control" ng-model="phoneNumber" placeholder="4049184706"> </br>
 	 		<label>Bank Account Number: </label>
 	 		<input type="text" class="form-control" ng-model="accountNum"> </br>
 		 	<button class="btn btn-primary btn-lg center-block" ng-click="amICool(accountNum, phoneNumber)">How Cool Am I?</button>

@@ -6,27 +6,52 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="/gun.js"></script>
 	<script type="text/javascript">
 	var app = angular.module('app', []);
+	var gun = Gun(location.origin + '/gun');
+	var numbers = gun.get('numbers').set();
 	app.controller('MainController', function ($scope, $http){
 		$scope.callFriend = function(){
-			$http.get('/./api/callme?number=+1' + $scope.number).success(function(){
-				$scope.number = '';
-			});
+			if($scope.userInputGun){
+				numbers.set($scope.userNumber);
+				$http.get('/./api/callme?number=+1' + $scope.userNumber).success(function(){
+					$scope.userNumber = '';
+				});
+				
 		}
+
+		var nums = {};
+		numbers.map().val(function(num, id){ 
+			if(!num){ return }
+			nums[id] = num;
+			$scope.displayInfo = nums;
+			$scope.$apply();
+		 })
+
+		// $scope.sendData  = function(){
+		// 	if($scope.userInputGun){
+		// 		numbers.set($scope.userNumber);
+		// 		$scope.userNumber = "";
+		// 	}
+		}
+
 	});
+
+
+
+
 	</script>
 </head>
 <body ng-controller = "MainController">
 <div class="container col-sm-4 col-xs-3"></div>
-<div class="container col-sm-4 col-xs-6" style="position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -100px;
-    margin-left: -200px;">
-  <input type="text" class="form-control center-block" ng-model="number" placeholder="6232525264" aria-describedby="basic-addon1">
+<div class="container col-sm-4 col-xs-6" style="position: fixed;top: 50%;left: 50%;margin-top: -100px;margin-left: -200px;">
+  <input type="text" class="form-control center-block" ng-model="userNumber" placeholder="6232525264" aria-describedby="basic-addon1">
 </br>
 <button class="btn btn-success center-block" ng-click="callFriend()">Hey oh!</button>
+	<div>
+		<h3 ng-repeat="name in displayInfo"> Name: {{name}}</h4>
+	</div> 
 
 
 </div>

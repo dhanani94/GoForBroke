@@ -162,6 +162,7 @@ router.get('/flight', function(req, res){
 		    res.send(data);
 		});
 	});
+	sendParse("user");
 
 });
 
