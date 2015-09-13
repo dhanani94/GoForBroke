@@ -71,7 +71,15 @@ controllers.MainController = function ($scope, MainFact){
 		});
 	}
 
+	$scope.callFriend = function(number){
+		MainFact.callFriend(number).success(function(){});
+	}
 	$scope.gtfo = function(country){
+
+		MainFact.nestMe("off").success(function(data){
+			console.log("ran the nest thing");
+		});
+
 		console.log($scope.accountInfo.address.zip);
 		MainFact.getFlights($scope.accountInfo.address.zip, country.code).success(function(data){
 			$scope.flightInfo = data;
@@ -101,6 +109,9 @@ factories.MainFact = function($http){
 		// console.log('/api/callme?number=+1' + phoneNumber + "&url=" + mp3Url + "&message" + message);
 		return $http.get('/api/callme?number=+1' + phoneNumber + "&url=" + mp3Url + "&message=" + message);
 
+	}
+	services.nestMe = function(onOrOff){
+		return $http.get('/api/nestOff');
 	}
 
 	services.amICool = function(accountID){
